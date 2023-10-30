@@ -1,0 +1,55 @@
+version: "3.7"
+
+services:
+  # image project
+  app:
+      build:
+          context: .
+          dockerfile: Dockerfile
+      restart: unless-stopped
+      working_dir: /var/www/
+      volumes:
+          - ./:/var/www
+      depends_on:
+          - redis
+      networks:
+          - projeto
+
+  # nginx
+  nginx:
+      image: nginx:alpine
+      restart: unless-stopped
+      ports:
+          - "8989:80"
+      volumes:
+          - ./:/var/www
+          - ./docker/nginx/:/etc/nginx/conf.d/
+      networks:
+          - projeto
+
+  # db postgres
+  db:
+      image: 'postgres:16'
+      container_name: postgres-db
+      restart: always
+      environment:
+          POSTGRES_USER: ${DB_USERNAME}
+          POSTGRES_PASSWORD: ${DB_PASSWORD}
+          POSTGRES_DB: ${DB_DATABASE}
+          POSTGRES_HOST_AUTH_METHOD: trust
+      volumes:
+          - ./.docker/postgres/dbdata:/var/lib/postgres/data
+      ports:
+          - "5432:5432"
+      networks:
+          - projeto
+
+  # redis
+  redis:
+      image: redis:latest
+      networks:
+          - projeto
+
+networks:
+    projeto:
+        driver: bridge
