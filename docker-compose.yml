@@ -38,9 +38,9 @@ services:
           POSTGRES_DB: ${DB_DATABASE}
           POSTGRES_HOST_AUTH_METHOD: trust
       volumes:
-          - ./.docker/postgres/dbdata:/var/lib/postgres/data
+          - /var/lib/postgres/data:/var/lib/postgres/data
       ports:
-          - "5432:5432"
+          - "5433:5432"
       networks:
           - projeto
 
