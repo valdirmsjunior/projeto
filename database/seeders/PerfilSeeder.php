@@ -20,7 +20,7 @@ class PerfilSeeder extends Seeder
             ],
             [
                 'codigo' => 2,
-                'nome' => ' Cidadao',
+                'nome' => ' Candidato',
             ],
         ];
 
