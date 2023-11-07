@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Usuario\StoreUserRequest;
+use App\Http\Requests\Usuario\UpdateUserRequest;
+use App\Models\User;
 use App\Repositories\PerfilRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -69,17 +71,32 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
+    public function edit(User $usuario)
+    {//dd($usuario);
+        return view('admin.usuarios.edit', [
+            'usuarios' => $usuario,
+            'perfis' => $this->perfilRepository->selectOption()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, User $usuario)
     {
-        //
+        $result = $this->userRepository->update($usuario, $request->except(['_token']));
+
+        if ($result === true) {
+            flash('Usuario atualizado com sucesso!')->success();
+
+            return redirect()->route('admin.usuarios.index');
+        }
+
+        flash('Erro ao atualizar o usuario! '.$result)->error();
+
+        return redirect()->route('admin.usuarios.edit', [
+            'usuario' => $usuario
+        ]);
     }
 
     /**

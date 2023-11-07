@@ -1,4 +1,5 @@
-<div class="mb-3 row">
+<div class="mb-3 row"> 
+    
     <div class="col-md-3">
         <x-form-label for="name" class="form-label" name="Nome" required />
         {!!
@@ -35,7 +36,7 @@
     <div class="col-md-3">
         <x-form-label for="perfil_id" class="form-label" name="Perfil" required />
         {!!
-            Form::select('perfil_id',$perfis, old('perfil_id', isset($usuarios) ? $usuario->perfil_id : ''), [
+            Form::select('perfil_id',$perfis, old('perfil_id', isset($usuarios) ? $usuarios->perfil_id : ''), [
                 'id' => 'perfil_id',
                 'class' => 'form-control '.($errors->has('perfil_id') ? 'is-invalid' : '')
             ])

@@ -29,6 +29,13 @@ class User extends Authenticatable
     protected $primaryKey = 'id';
 
     /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool

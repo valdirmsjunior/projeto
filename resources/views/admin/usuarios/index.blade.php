@@ -25,27 +25,24 @@
                     </div>
                 </div>
             </x-slot>
-            @php
-                //dd($usuarios->all());
-            @endphp
+            
             <x-slot name="slot">
                 @forelse ($usuarios as $usuarioKey => $usuario)
-                @php
-                //dd($usuario->all());
-            @endphp
+                
                 <tr class="text-center align-middle">
                     <td>{{ $usuario->name }}</td>
                     <td>{{ $usuario->email }}</td>
-                    <td>{{ $usuario->perfil_id ? $usuario->perfil->nome : ""}}</td>
+                    <td>{{ $usuario->perfil_id ? $usuario->perfil->nome : ''}}</td>
                     <td>
                         <div class="dropdown dropup">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu-{{ $usuarioKey }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu-{{ $usuarioKey }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-cog"></i>
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu-{{ $usuarioKey }}" style="">
+                            
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu-{{ $usuarioKey }}" >
                                 <a
                                     class="dropdown-item"
-                                    href="#"
+                                    href="{{ route('admin.usuarios.edit', $usuario) }}"
                                 >
                                     <i class="fas fa-pencil-alt"></i> Editar
                                 </a>

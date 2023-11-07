@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
         Route::get('/', 'Admin\UserController@index')->name('index');
         Route::get('/cadastro', 'Admin\UserController@create')->name('create');
         Route::post('/', 'Admin\UserController@store')->name('store');
+        Route::get('/{usuario}/edicao', 'Admin\UserController@edit')->name('edit');
+        Route::put('/{usuario}', 'Admin\UserController@update')->name('update');
     });
 });
 

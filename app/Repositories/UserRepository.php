@@ -52,4 +52,18 @@ class UserRepository
             return $e->getMessage();
         }
     }
+
+    public function update(User $usuario, $data)
+    {
+        try {
+            $usuario->fill($data);
+            $usuario->perfil_id = $data['perfil_id'];
+            $usuario->password = md5($data['password']);
+            $usuario->save();
+
+            return true;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
