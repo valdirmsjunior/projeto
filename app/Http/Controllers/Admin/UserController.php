@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Usuario\StoreUserRequest;
 use App\Repositories\PerfilRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         $result = $this->userRepository->store($request->except(['_token']));
 
