@@ -36,7 +36,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
     // USUARIOS
     Route::prefix('usuarios')->name('admin.usuarios.')->group(function() {
         Route::get('/', 'Admin\UserController@index')->name('index');
-        
+        Route::get('/cadastro', 'Admin\UserController@create')->name('create');
+        Route::post('/', 'Admin\UserController@store')->name('store');
     });
 });
 

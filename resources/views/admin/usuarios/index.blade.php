@@ -19,7 +19,7 @@
             <x-slot name="slotButton">
                 <div class="mb-3 row justify-content-end">
                     <div class="col-2 d-grid">
-                        <a class="btn btn-info" href="#" role="button">
+                        <a class="btn btn-info" href="{{route('admin.usuarios.create')}}" role="button">
                             <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Usuário
                         </a>
                     </div>
