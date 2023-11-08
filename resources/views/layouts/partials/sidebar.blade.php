@@ -30,17 +30,17 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('admin.usuarios.index')}}" 
             aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
+            <i class="fas fa-fw fa-users"></i>
             <span>Usuários</span>
         </a>
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" 
+        <a class="nav-link collapsed" href="{{ route('admin.vagas.index')}}" 
             aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Utilities</span>
+            <i class="far fa-address-card"></i>
+            <span>Vagas</span>
         </a>
     </li>
     
