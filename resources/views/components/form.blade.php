@@ -18,7 +18,7 @@
         ])
     !!}
 @elseif ($method == 'PUT' || $method == 'DELETE')
-    {!!
+    {!! 
         Form::model($model, [
             'url' => $action,
             'class' => '',

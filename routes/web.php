@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
         Route::post('/', 'Admin\UserController@store')->name('store');
         Route::get('/{usuario}/edicao', 'Admin\UserController@edit')->name('edit');
         Route::put('/{usuario}', 'Admin\UserController@update')->name('update');
+        Route::delete('/{usuario}/delete', 'Admin\UserController@destroy')->name('destroy');
     });
 });
 

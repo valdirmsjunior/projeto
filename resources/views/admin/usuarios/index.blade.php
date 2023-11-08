@@ -13,7 +13,7 @@
         <x-table
             title="Usuários"
             subtitle="Listagem de Usuários"
-            :headers="['Nome', 'E-mail', 'Perfil', 'Ações']"
+            :headers="['id' ,'Nome', 'E-mail', 'Perfil', 'Ações']"
             :records="$usuarios"
         >
             <x-slot name="slotButton">
@@ -46,12 +46,26 @@
                                 >
                                     <i class="fas fa-pencil-alt"></i> Editar
                                 </a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <a
+                                    class=" dropdown-item text-danger"
+                                    data-toggle="modal" data-target="#ModalDelete_{{$usuario->id}}" title="Deletar"
+                                >
+                                    <i class="fas fa-trash-alt"></i> Deletar
+                                </a>
+                                
                             </div>
+                            @include('admin.usuarios.partials.modal-delete')
                         </div>
+                        
                     </td>
                 </tr>
+                
                 @empty
                 @endforelse
+                
             </x-slot>
         </x-table>
     </div>

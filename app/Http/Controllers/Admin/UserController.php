@@ -102,8 +102,17 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy( User $usuario)
     {
-        //
+        $result = $this->userRepository->destroy($usuario);
+
+        if ($result === true) {
+            flash('Usuario deletado com sucesso!')->success();
+
+            return redirect()->route('admin.usuarios.index');
+        }
+
+        flash('Erro ao deletar o usuario! '.$result)->error();
+
     }
 }

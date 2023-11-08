@@ -66,4 +66,15 @@ class UserRepository
             return $e->getMessage();
         }
     }
+
+    public function destroy($usuario)
+    {
+        try {
+            $usuario->delete();
+
+            return true;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
