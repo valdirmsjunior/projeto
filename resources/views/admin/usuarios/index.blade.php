@@ -13,7 +13,7 @@
         <x-table
             title="Usuários"
             subtitle="Listagem de Usuários"
-            :headers="['id' ,'Nome', 'E-mail', 'Perfil', 'Ações']"
+            :headers="['Nome', 'E-mail', 'Perfil', 'Ações']"
             :records="$usuarios"
         >
             <x-slot name="slotButton">
