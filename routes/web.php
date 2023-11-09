@@ -42,6 +42,17 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
         Route::put('/{usuario}', 'Admin\UserController@update')->name('update');
         Route::delete('/{usuario}/delete', 'Admin\UserController@destroy')->name('destroy');
     });
+
+    //VAGAS
+    Route::prefix('vagas')->name('admin.vagas.')->group(function() {
+        Route::get('/', 'Admin\VagaController@index')->name('index');
+        Route::get('/cadastro-vagas', 'Admin\VagaController@create')->name('create');
+        Route::post('/', 'Admin\VagaController@store')->name('store');
+        Route::get('/{vaga}/edicao', 'Admin\VagaController@edit')->name('edit');
+        Route::put('/{vaga}', 'Admin\VagaController@update')->name('update');
+        Route::delete('/{vaga}/delete', 'Admin\VagaController@destroy')->name('destroy');
+    });
+
 });
 
 

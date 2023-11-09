@@ -32,7 +32,7 @@
         !!}
         <x-form-error :message="$errors->first('email')" />
     </div>
-
+    
     <div class="col-md-3">
         <x-form-label for="perfil_id" class="form-label" name="Perfil" required />
         {!!
