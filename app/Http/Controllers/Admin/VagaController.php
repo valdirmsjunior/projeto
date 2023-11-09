@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreVagaRequest;
+use App\Http\Requests\Vaga\StoreVagaRequest;
 use App\Models\Vaga;
 use App\Repositories\TipoContratoRepository;
 use App\Repositories\VagaRepository;
@@ -21,11 +21,12 @@ class VagaController extends Controller
     }
 
     public function index(Request $request)
-    {
+    { 
         if (count($request->all()) > 0) {
-            $vagas = $this->vagaRepository->paginateWhere(10, 'vaga', 'ASC', $request->except(['_token', 'page']));
+            $vagas = $this->vagaRepository->paginateWhere(10, 'nome', 'ASC', $request->except(['_token', 'page']));
         } else {
-            $vagas = $this->vagaRepository->paginate(10, 'vaga'); 
+            
+            $vagas = $this->vagaRepository->paginate(10, 'nome'); 
         }
         return view('admin.vagas.index', [
             'vagas' => $vagas
@@ -46,7 +47,7 @@ class VagaController extends Controller
         if ($result === true) {
             flash('Vaga cadastrada com sucesso!')->success();
 
-            return redirect()->route('admin.vagas.create');
+            return redirect()->route('admin.vagas.index');
         }
 
         flash('Erro ao cadastrar a vaga! '.$result)->error();
@@ -80,8 +81,8 @@ class VagaController extends Controller
     }
 
     public function destroy(Vaga $vaga)
-    {dd($vaga->id);
-        $result = $this->vagaRepository->destroy($vaga->id);
+    {
+        $result = $this->vagaRepository->destroy($vaga);
 
         if ($result === true) {
             flash('Vaga deletada com sucesso!')->success();

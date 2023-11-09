@@ -19,7 +19,6 @@ class TipoContratoRepository
         try {
             return $this->model
                 ->all()
-                ->sortBy('nome')
                 ->pluck('nome', 'id')
                 ->prepend('Escolha a opção');
         } catch (Exception $e) {

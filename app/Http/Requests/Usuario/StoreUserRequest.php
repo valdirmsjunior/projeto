@@ -25,7 +25,7 @@ class StoreUserRequest extends FormRequest
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:8',
-            'perfil_id' => 'required|array|min:1',
+            'perfil_id' => 'required|numeric:0|min:1',
         ];
 
     }
@@ -37,7 +37,7 @@ class StoreUserRequest extends FormRequest
             'email.required' => 'Informe o seu email!',
             'email.unique' => 'email já cadastrado!',
             'email.email' => 'Informe um email valido!',
-            'perfil_id.array' => 'Informe o Perfil!',
+            'perfil_id.min' => 'Informe o Perfil!',
             'password.required' => 'O campo Senha não pode ser vazio!',
             'password.min' => 'A senha deve possuir no minimo 8 caracteres!',
         ];

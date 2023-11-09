@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Vaga;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class StoreVagaRequest extends FormRequest
 {
@@ -19,12 +20,12 @@ class StoreVagaRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
+    public function rules(Request $request): array
+    {//dd($request->all());
         return [
-            'vaga' => 'required|max:255',
-            'quantidade_vagas' => 'required',
-            'tipo_contrato_id' => 'required'
+            'nome' => 'required|max:255',
+            'quantidade_vagas' => 'required|numeric|integer',
+            'tipo_contrato_id' => 'required|numeric:0|min:1',
         ];
     }
 
@@ -36,9 +37,10 @@ class StoreVagaRequest extends FormRequest
     public function messages()
     {
         return [
-            'vaga.required' => 'O campo Vaga não pode ser vazio!',
+            'nome.required' => 'O campo Vaga não pode ser vazio!',
             'quantidade_vagas.required' => 'Informe a quantidade de vagas!',
-            'tipo_contrato_id.required' => 'Informe o tipo de Contrato!',
+            'quantidade_vagas.numeric' => 'Informe um número válido!',
+            'tipo_contrato_id.min' => 'Informe o tipo de Contrato!',
         ];
     }
 
@@ -50,7 +52,7 @@ class StoreVagaRequest extends FormRequest
     public function attributes()
     {
         return [
-            'vaga' => 'Vaga',
+            'nome' => 'Nome',
             'quantidade_vagas' => 'Quantidade de Vagas',
             'tipo_contrato_id' => 'Tipo de Contrato',
         ];

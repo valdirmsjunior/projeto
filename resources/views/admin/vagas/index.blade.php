@@ -28,11 +28,11 @@
             
             <x-slot name="slot">
                 @forelse ($vagas as $vagaKey => $vaga)
-                
+                 
                 <tr class="text-center align-middle">
-                    <td>{{ $vaga->vaga }}</td>
-                    <td>{{ $vaga->quantidade_vagas }}</td>
+                    <td>{{ $vaga->nome }}</td>
                     <td>{{ $vaga->tipo_contrato_id ? $vaga->tipoContrato->nome : ""}}</td>
+                    <td>{{ $vaga->quantidade_vagas }}</td>
                     <td>{{ $vaga->id }}</td>
                     <td>
                         <div class="dropdown dropup">
@@ -43,7 +43,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu-{{ $vagaKey }}" >
                                 <a
                                     class="dropdown-item"
-                                    href="#"
+                                    href="{{ route('admin.vagas.edit', $vaga)}}"
                                 >
                                     <i class="fas fa-pencil-alt"></i> Editar
                                 </a>
@@ -58,7 +58,7 @@
                                 </a>
                                 
                             </div>
-                            {{-- @include('admin.usuarios.partials.modal-delete') --}}
+                            @include('admin.vagas.partials.modal-delete')
                         </div>
                         
                     </td>

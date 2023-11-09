@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
         Route::post('/', 'Admin\VagaController@store')->name('store');
         Route::get('/{vaga}/edicao', 'Admin\VagaController@edit')->name('edit');
         Route::put('/{vaga}', 'Admin\VagaController@update')->name('update');
-        Route::delete('/vagas', 'Admin\VagaController@destroy')->name('destroy');
+        Route::delete('/{vaga}/delete', 'Admin\VagaController@destroy')->name('destroy');
     });
 
 });

@@ -24,9 +24,9 @@ class VagaRepository
         try {
             $query = $this->model->query();
             $query->select('vagas.*');
-            $query->join('tipo_contratos', 'tipo_contratos.id', '=', 'vagas.tipo_contrato_id');
+            $query->join('tipos_contrato', 'tipos_contrato.id', '=', 'vagas.tipo_contrato_id');
             $query->orderBy($orderBy, $sort);
-            //"<print_r>". dd($query->paginate()) ."</print_r>";
+            
             return $query->paginate($paginate);
         } catch (Exception $e) {
             return [];
@@ -38,12 +38,12 @@ class VagaRepository
         try {
             $query = $this->model->query();
             $query->select('vagas.*');
-            $query->join('tipo_contratos', 'tipo_contratos.id', '=', 'vagas.tipo_contratos_id');
+            $query->join('tipos_contrato', 'tipos_contrato.id', '=', 'vagas.tipo_contrato_id');
             $query->orderBy($orderBy, $sort);
 
             if (count($columns) > 0) {
-                if (isset($columns['tipo_contratos_id'])) {
-                    $query->where('tipo_contratos_id', $columns['tipo_contratos_id']);
+                if (isset($columns['tipo_contrato_id'])) {
+                    $query->where('tipo_contrato_id', $columns['tipo_contrato_id']);
                 }
             }
     
@@ -59,6 +59,8 @@ class VagaRepository
             DB::beginTransaction();
 
             $vaga = new $this->model($data);
+            $vaga->nome = $data['nome'];
+
             $vaga->save();
 
             DB::commit();
@@ -84,7 +86,7 @@ class VagaRepository
     }
 
     public function destroy($data)
-    {dd($data->id);
+    {
         try {
             $data->delete();
 
