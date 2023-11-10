@@ -82,11 +82,11 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->perfil->contains('codigo', PerfilEnum::ADMIN->value);
+        return $this->perfil('codigo', PerfilEnum::ADMIN->value);
     }
 
     public function isUser()
     {
-        return $this->perfil->contains('codigo', PerfilEnum::USUARIO->value);
+        return $this->perfil('codigo', PerfilEnum::USUARIO->value);
     }
 }

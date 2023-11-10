@@ -3,7 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Exception;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 class Admin
@@ -14,7 +18,23 @@ class Admin
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {
-        return $next($request);
+    {//dd(Auth::user()->isAdmin());
+        try {
+            $usuario = Auth::user();
+            $route   = Route::current();
+            $name    = Route::currentRouteName();
+            $action  = Route::currentRouteAction();
+            $prefix  = Route::currentRouteAction();
+
+            if($usuario->isAdmin()){
+                return $next($request);
+            }
+
+
+            return abort(404);
+
+        } catch (Exception $e) {
+            return abort(404);
+        }
     }
 }

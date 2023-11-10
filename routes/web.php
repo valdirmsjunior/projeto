@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
         })->name('dashboard');
 
         // USUARIOS
-        Route::prefix('usuarios')->name('admin.usuarios.')->group(function() {
+        Route::prefix('usuarios')->name('admin.usuarios.')->middleware(['admin'])->group(function() {
             Route::get('/', 'UserController@index')->name('index');
             Route::get('/cadastro', 'UserController@create')->name('create');
             Route::post('/', 'UserController@store')->name('store');
@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
         });
 
         //VAGAS
-        Route::prefix('vagas')->name('admin.vagas.')->group(function() {
+        Route::prefix('vagas')->name('admin.vagas.')->middleware(['admin'])->group(function() {
             Route::get('/', 'VagaController@index')->name('index');
             Route::get('/cadastro-vagas', 'VagaController@create')->name('create');
             Route::post('/', 'VagaController@store')->name('store');
