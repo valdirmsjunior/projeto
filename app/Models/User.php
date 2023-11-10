@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\Perfil as PerfilEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -76,5 +78,15 @@ class User extends Authenticatable
     public function perfil()
     {
         return $this->belongsTo(Perfil::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->perfil->contains('codigo', PerfilEnum::ADMIN->value);
+    }
+
+    public function isUser()
+    {
+        return $this->perfil->contains('codigo', PerfilEnum::USUARIO->value);
     }
 }

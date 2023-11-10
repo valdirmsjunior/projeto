@@ -14,45 +14,46 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-
-    //auto login quando estiver em local()
-    if(app()->isLocal()) {
-        auth()->loginUsingId(1);
-
-        return to_route('dashboard');
-    }
-
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Controllers'], function(){
 
-    // USUARIOS
-    Route::prefix('usuarios')->name('admin.usuarios.')->group(function() {
-        Route::get('/', 'Admin\UserController@index')->name('index');
-        Route::get('/cadastro', 'Admin\UserController@create')->name('create');
-        Route::post('/', 'Admin\UserController@store')->name('store');
-        Route::get('/{usuario}/edicao', 'Admin\UserController@edit')->name('edit');
-        Route::put('/{usuario}', 'Admin\UserController@update')->name('update');
-        Route::delete('/{usuario}/delete', 'Admin\UserController@destroy')->name('destroy');
+    Route::get('/', function () {
+
+        //auto login quando estiver em local()
+        if(app()->isLocal()) {
+            auth()->loginUsingId(1);
+    
+            return redirect('/administracao');
+        }
     });
 
-    //VAGAS
-    Route::prefix('vagas')->name('admin.vagas.')->group(function() {
-        Route::get('/', 'Admin\VagaController@index')->name('index');
-        Route::get('/cadastro-vagas', 'Admin\VagaController@create')->name('create');
-        Route::post('/', 'Admin\VagaController@store')->name('store');
-        Route::get('/{vaga}/edicao', 'Admin\VagaController@edit')->name('edit');
-        Route::put('/{vaga}', 'Admin\VagaController@update')->name('update');
-        Route::delete('/{vaga}/delete', 'Admin\VagaController@destroy')->name('destroy');
-    });
+    Route::prefix('administracao')->namespace('Admin')->group(function () {
 
+        // HOME
+        Route::get('/', function () {
+            return view('dashboard');
+        })->name('dashboard');
+
+        // USUARIOS
+        Route::prefix('usuarios')->name('admin.usuarios.')->group(function() {
+            Route::get('/', 'UserController@index')->name('index');
+            Route::get('/cadastro', 'UserController@create')->name('create');
+            Route::post('/', 'UserController@store')->name('store');
+            Route::get('/{usuario}/edicao', 'UserController@edit')->name('edit');
+            Route::put('/{usuario}', 'UserController@update')->name('update');
+            Route::delete('/{usuario}/delete', 'UserController@destroy')->name('destroy');
+        });
+
+        //VAGAS
+        Route::prefix('vagas')->name('admin.vagas.')->group(function() {
+            Route::get('/', 'VagaController@index')->name('index');
+            Route::get('/cadastro-vagas', 'VagaController@create')->name('create');
+            Route::post('/', 'VagaController@store')->name('store');
+            Route::get('/{vaga}/edicao', 'VagaController@edit')->name('edit');
+            Route::put('/{vaga}', 'VagaController@update')->name('update');
+            Route::delete('/{vaga}/delete', 'VagaController@destroy')->name('destroy');
+        });
+    });
 });
 
 

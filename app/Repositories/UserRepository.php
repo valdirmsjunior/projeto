@@ -23,7 +23,7 @@ class UserRepository
             $query->select('users.*');
             $query->join('perfis', 'perfis.id', '=', 'users.perfil_id');
             $query->where('perfis.codigo', Perfil::ADMIN);
-            $query->orWhere('perfis.codigo', Perfil::CANDIDATO);
+            $query->orWhere('perfis.codigo', Perfil::USUARIO);
             $query->orderBy($orderBy, $sort);
 
             //dd($query->toSql());
