@@ -11,6 +11,8 @@
     <!-- Divider -->
     <hr class="my-0 sidebar-divider">
 
+    @can('admin')
+        
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
         <a class="nav-link" href="index.html">
@@ -46,7 +48,20 @@
     
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+    @endcan
 
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.vagas.index')}}" 
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="far fa-address-card"></i>
+            <span>Vagas Disponiveis</span>
+        </a>
+    </li>
+    
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="border-0 rounded-circle" id="sidebarToggle"></button>

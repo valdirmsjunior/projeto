@@ -13,19 +13,19 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
 
+    //auto login quando estiver em local()
+    if(app()->isLocal()) {
+        auth()->loginUsingId(1);
+
+        return redirect('/administracao');
+    }
+});
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Controllers'], function(){
 
-    Route::get('/', function () {
-
-        //auto login quando estiver em local()
-        if(app()->isLocal()) {
-            auth()->loginUsingId(1);
     
-            return redirect('/administracao');
-        }
-    });
 
     Route::prefix('administracao')->namespace('Admin')->group(function () {
 
@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
         })->name('dashboard');
 
         // USUARIOS
-        Route::prefix('usuarios')->name('admin.usuarios.')->middleware(['admin'])->group(function() {
+        Route::prefix('usuarios')->name('admin.usuarios.')->middleware(['can:admin'])->group(function() {
             Route::get('/', 'UserController@index')->name('index');
             Route::get('/cadastro', 'UserController@create')->name('create');
             Route::post('/', 'UserController@store')->name('store');
@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
         });
 
         //VAGAS
-        Route::prefix('vagas')->name('admin.vagas.')->middleware(['admin'])->group(function() {
+        Route::prefix('vagas')->name('admin.vagas.')->middleware(['can:admin'])->group(function() {
             Route::get('/', 'VagaController@index')->name('index');
             Route::get('/cadastro-vagas', 'VagaController@create')->name('create');
             Route::post('/', 'VagaController@store')->name('store');
@@ -53,6 +53,12 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
             Route::put('/{vaga}', 'VagaController@update')->name('update');
             Route::delete('/{vaga}/delete', 'VagaController@destroy')->name('destroy');
         });
+    });
+
+    //AREA DO CANDIDATO
+    Route::prefix('candidato')->namespace('Usuario')->group(function () {
+        // COMITE HOME
+        Route::get('/', 'HomeController@index')->name('usuarios.index')->middleware('can:usuario');
     });
 });
 

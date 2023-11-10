@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\Perfil as PerfilEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -75,18 +76,20 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function perfil()
+    public function perfil(): BelongsTo
     {
         return $this->belongsTo(Perfil::class);
     }
 
-    public function isAdmin()
-    {
-        return $this->perfil('codigo', PerfilEnum::ADMIN->value);
+    public function isAdmin(int $codigoPerfil): bool
+    {//dd($this->perfil('codigo', $codigo)->exists());
+        //return $this->perfil('codigo', PerfilEnum::ADMIN->value);
+        //return $this->perfil()->where('nome', $permissao)->exists();
+        return $codigoPerfil === PerfilEnum::ADMIN->value ?  true :  false;
     }
 
-    public function isUser()
+    public function isUser(int $codigoPerfil)
     {
-        return $this->perfil('codigo', PerfilEnum::USUARIO->value);
+        return $codigoPerfil === PerfilEnum::USUARIO->value ?  true :  false;
     }
 }

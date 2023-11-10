@@ -26,6 +26,8 @@ class Admin
             $action  = Route::currentRouteAction();
             $prefix  = Route::currentRouteAction();
 
+            //dd($usuario->isAdmin());
+
             if($usuario->isAdmin()){
                 return $next($request);
             }
