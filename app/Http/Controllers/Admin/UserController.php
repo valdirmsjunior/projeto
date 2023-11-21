@@ -22,14 +22,15 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if (count($request->all()) > 0) {
-            $usuarios = $this->userRepository->paginateWhere(10, 'name', 'ASC', $request->except(['_token', 'page']));
+            $usuarios = $this->userRepository->paginateWhere(20, 'name', 'ASC');
         } else {
-            $usuarios = $this->userRepository->paginate(10, 'name');
+            $usuarios = $this->userRepository->paginate(20, 'name');
         }
 
         return view('admin.usuarios.index', [
-            'usuarios' => $usuarios
-        ]);
+            'usuarios' => $usuarios,
+            'perfis' => $this->perfilRepository->selectOption()
+        ])->with($request->flash());;
     }
 
     /**

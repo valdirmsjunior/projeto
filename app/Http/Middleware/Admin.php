@@ -18,15 +18,13 @@ class Admin
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {//dd(Auth::user()->isAdmin());
+    {
         try {
             $usuario = Auth::user();
             $route   = Route::current();
             $name    = Route::currentRouteName();
             $action  = Route::currentRouteAction();
             $prefix  = Route::currentRouteAction();
-
-            //dd($usuario->isAdmin());
 
             if($usuario->isAdmin()){
                 return $next($request);

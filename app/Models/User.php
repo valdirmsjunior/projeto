@@ -82,13 +82,11 @@ class User extends Authenticatable
     }
 
     public function isAdmin(int $codigoPerfil): bool
-    {//dd($this->perfil('codigo', $codigo)->exists());
-        //return $this->perfil('codigo', PerfilEnum::ADMIN->value);
-        //return $this->perfil()->where('nome', $permissao)->exists();
+    {
         return $codigoPerfil === PerfilEnum::ADMIN->value ?  true :  false;
     }
 
-    public function isUser(int $codigoPerfil)
+    public function isUser(int $codigoPerfil): bool
     {
         return $codigoPerfil === PerfilEnum::USUARIO->value ?  true :  false;
     }

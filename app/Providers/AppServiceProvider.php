@@ -10,6 +10,7 @@ use App\Repositories\PerfilRepository;
 use App\Repositories\TipoContratoRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\VagaRepository;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -41,6 +42,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useBootstrap();
     }
 }

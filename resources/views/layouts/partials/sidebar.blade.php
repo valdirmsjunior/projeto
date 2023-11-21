@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -50,17 +50,20 @@
     <hr class="sidebar-divider d-none d-md-block">
     @endcan
 
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('admin.vagas.index')}}" 
-            aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="far fa-address-card"></i>
-            <span>Vagas Disponiveis</span>
-        </a>
-    </li>
+    @can('usuario')
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('admin.vagas.index')}}" 
+                aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="far fa-address-card"></i>
+                <span>Vagas Disponiveis</span>
+            </a>
+        </li>
+        
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+    @endcan
     
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
     
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

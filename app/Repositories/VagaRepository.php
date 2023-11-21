@@ -19,7 +19,7 @@ class VagaRepository
         $this->model = $model;
     }
 
-    public function paginate($paginate = 10, $orderBy, $sort = 'ASC')
+    public function paginate($paginate = 20, $orderBy, $sort = 'ASC')
     {
         try {
             $query = $this->model->query();
@@ -33,21 +33,19 @@ class VagaRepository
         }
     }
 
-    public function paginateWhere($paginate = 10, $orderBy, $sort = 'ASC', $columns = null)
+    public function paginateWhere($paginate = 20, $orderBy, $sort = 'ASC', $columns = null)
     {
         try {
             $query = $this->model->query();
-            $query->select('vagas.*');
-            $query->join('tipos_contrato', 'tipos_contrato.id', '=', 'vagas.tipo_contrato_id');
-            $query->orderBy($orderBy, $sort);
+            $vagas = request()->only('nome', 'tipo_contrato_id');
 
-            if (count($columns) > 0) {
-                if (isset($columns['tipo_contrato_id'])) {
-                    $query->where('tipo_contrato_id', $columns['tipo_contrato_id']);
+            foreach ($vagas as $nome => $valor) {
+                if($valor){
+                    $query->where($nome, 'ilike', '%'. $valor. '%');
                 }
             }
-    
-            return $query->orderBy($orderBy, $sort)->paginate($paginate);
+            $query->orderBy($orderBy, $sort);
+            return $query->paginate($paginate);
         } catch (Exception $e) {
             return [];
         }

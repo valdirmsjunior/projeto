@@ -8,6 +8,9 @@
 
 @section('content')
 
+@include('admin.vagas.partials.form-filtro')
+
+<br><br>
 <div class="row">
     <div class="col-lg-12">
         <x-table

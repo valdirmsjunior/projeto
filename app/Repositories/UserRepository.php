@@ -5,7 +5,9 @@ namespace App\Repositories;
 use App\Enums\Perfil;
 use App\Models\User;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository
 {
@@ -16,21 +18,35 @@ class UserRepository
         $this->model = $model;
     }
 
-    public function paginate($paginate = 10, $orderBy, $sort = 'ASC', $columns = null)
+    public function paginate($paginate = 20, $orderBy, $sort = 'ASC', $columns = null)
     {
         try {
             $query = $this->model->query();
             $query->select('users.*');
             $query->join('perfis', 'perfis.id', '=', 'users.perfil_id');
-            $query->where('perfis.codigo', Perfil::ADMIN);
-            $query->orWhere('perfis.codigo', Perfil::USUARIO);
             $query->orderBy($orderBy, $sort);
 
-            //dd($query->toSql());
             return $query->paginate($paginate);
         } catch (Exception $e) {
             return [];
         }
+    }
+
+    public function paginateWhere($paginate = 20, $orderBy, $sort, $columns = null)
+    { 
+        $query = $this->model->query();
+        $usuarios = request()->only('name', 'email', 'perfil_id');
+
+        foreach ($usuarios as $nome => $valor) {
+            if($valor){
+                $query->where($nome, 'ilike', '%'. $valor. '%');
+            }
+        }
+
+        $query->orderBy($orderBy, $sort);
+
+        return $query->paginate($paginate);
+
     }
 
     public function store($data)
@@ -39,7 +55,7 @@ class UserRepository
             DB::beginTransaction();
             $usuario = new $this->model($data);
             $usuario->perfil_id = $data['perfil_id'];
-            $usuario->password = md5($data['password']);
+            $usuario->password = Hash::make($data['password']);
             
             $usuario->save();
 

@@ -23,13 +23,13 @@ class VagaController extends Controller
     public function index(Request $request)
     { 
         if (count($request->all()) > 0) {
-            $vagas = $this->vagaRepository->paginateWhere(10, 'nome', 'ASC', $request->except(['_token', 'page']));
-        } else {
-            
-            $vagas = $this->vagaRepository->paginate(10, 'nome'); 
+            $vagas = $this->vagaRepository->paginateWhere(1, 'nome', 'ASC');
+        } else { 
+            $vagas = $this->vagaRepository->paginate(1, 'nome'); 
         }
         return view('admin.vagas.index', [
-            'vagas' => $vagas
+            'vagas' => $vagas,
+            'tipos_contrato' => $this->tipoContratoRepository->selectOption()
         ]);
     }
 

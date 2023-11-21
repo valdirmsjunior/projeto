@@ -19,7 +19,11 @@ Route::get('/', function () {
     if(app()->isLocal()) {
         auth()->loginUsingId(1);
 
-        return redirect('/administracao');
+        if(Auth::user()->perfil_id == 1) {
+            return redirect('/administracao');
+        }else{
+            return redirect('/candidato');
+        }
     }
 });
 
@@ -28,6 +32,9 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
     
 
     Route::prefix('administracao')->namespace('Admin')->group(function () {
+
+        //HOME
+        Route::get('/', '')
 
         // HOME
         Route::get('/', function () {
@@ -57,7 +64,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
 
     //AREA DO CANDIDATO
     Route::prefix('candidato')->namespace('Usuario')->group(function () {
-        // COMITE HOME
+        //  HOME
         Route::get('/', 'HomeController@index')->name('usuarios.index')->middleware('can:usuario');
     });
 });
