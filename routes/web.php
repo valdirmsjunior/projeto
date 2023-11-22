@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,7 @@ Route::get('/', function () {
         if(Auth::user()->perfil_id == 1) {
             return redirect('/administracao');
         }else{
-            return redirect('/candidato');
+            return redirect('/login');
         }
     }
 });
@@ -33,13 +34,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
 
     Route::prefix('administracao')->namespace('Admin')->group(function () {
 
-        //HOME
-        Route::get('/', '')
+        Route::get('/', 'HomeController')->name('admin.home.index');
 
-        // HOME
-        Route::get('/', function () {
-            return view('dashboard');
-        })->name('dashboard');
 
         // USUARIOS
         Route::prefix('usuarios')->name('admin.usuarios.')->middleware(['can:admin'])->group(function() {
@@ -67,6 +63,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
         //  HOME
         Route::get('/', 'HomeController@index')->name('usuarios.index')->middleware('can:usuario');
     });
+
+    Route::post('/', [AuthenticatedSessionController::class, 'destroy'])->name('auth.logout');
 });
 
 
