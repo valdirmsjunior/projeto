@@ -14,27 +14,40 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
 
-    //auto login quando estiver em local()
-    if(app()->isLocal()) {
-        auth()->loginUsingId(1);
+// Route::get('/', function () {
+//     return redirect('/login');
+// });
+// Route::get('/', function () {
 
-        if(Auth::user()->perfil_id == 1) {
-            return redirect('/administracao');
-        }else{
-            return redirect('/login');
-        }
-    }
-});
+//     //auto login quando estiver em local()
+//     if(app()->isLocal()) {
+//         //auth()->loginUsingId(1);
+
+//         if(Auth::user()->perfil_id == 1) {
+//             return redirect('/administracao');
+//         }else{
+//             return redirect('/usuario');
+//         }
+//     }
+// });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Controllers'], function(){
 
-    
+    Route::get('/home', function () {
+        if(empty(Auth::user())){
+            if(Auth::user()->perfil_id == 1){
+                return redirect('/administracao');
+            }
+        }else{
+            return redirect('/usuario');
+        }
+        
+    })->name('home');
 
     Route::prefix('administracao')->namespace('Admin')->group(function () {
 
-        Route::get('/', 'HomeController')->name('admin.home.index');
+        Route::get('/', 'HomeController')->name('admin.home.index')->middleware(['can:admin']);
 
 
         // USUARIOS
@@ -59,7 +72,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
     });
 
     //AREA DO CANDIDATO
-    Route::prefix('candidato')->namespace('Usuario')->group(function () {
+    Route::prefix('usuario')->namespace('Usuario')->group(function () {
         //  HOME
         Route::get('/', 'HomeController@index')->name('usuarios.index')->middleware('can:usuario');
     });
