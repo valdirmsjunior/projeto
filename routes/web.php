@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Perfil;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -33,14 +34,18 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Controllers'], function(){
-
-    Route::get('/home', function () {
-        if(empty(Auth::user())){
-            if(Auth::user()->perfil_id == 1){
+    
+    Route::get('/', function () {
+        
+        if(Auth::user()){
+            
+            if(Auth::user()->perfil_id == Perfil::ADMIN->value){
                 return redirect('/administracao');
+            }else{
+                return redirect('/usuario');
             }
         }else{
-            return redirect('/usuario');
+            return redirect('/login');
         }
         
     })->name('home');
