@@ -19,21 +19,7 @@ class VagaRepository
         $this->model = $model;
     }
 
-    public function paginate($paginate = 20, $orderBy, $sort = 'ASC')
-    {
-        try {
-            $query = $this->model->query();
-            $query->select('vagas.*');
-            $query->join('tipos_contrato', 'tipos_contrato.id', '=', 'vagas.tipo_contrato_id');
-            $query->orderBy($orderBy, $sort);
-            
-            return $query->paginate($paginate);
-        } catch (Exception $e) {
-            return [];
-        }
-    }
-
-    public function paginateWhere($paginate = 20, $orderBy, $sort = 'ASC', $columns = null)
+    public function paginate($paginate = 20, $orderBy, $sort = 'ASC', $columns = null)
     {
         try {
             $query = $this->model->query();
@@ -44,10 +30,11 @@ class VagaRepository
                     $query->where($nome, 'ilike', '%'. $valor. '%');
                 }
             }
+            
             $query->orderBy($orderBy, $sort);
             return $query->paginate($paginate);
         } catch (Exception $e) {
-            return [];
+            return $e->getMessage();
         }
     }
 

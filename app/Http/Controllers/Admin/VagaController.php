@@ -22,15 +22,12 @@ class VagaController extends Controller
 
     public function index(Request $request)
     { 
-        if (count($request->all()) > 0) {
-            $vagas = $this->vagaRepository->paginateWhere(1, 'nome', 'ASC');
-        } else { 
-            $vagas = $this->vagaRepository->paginate(1, 'nome'); 
-        }
+        $vagas = $this->vagaRepository->paginate(20, 'nome'); 
+        
         return view('admin.vagas.index', [
             'vagas' => $vagas,
             'tipos_contrato' => $this->tipoContratoRepository->selectOption()
-        ]);
+        ])->with($request->flash());
     }
 
     public function create()

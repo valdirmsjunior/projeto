@@ -18,35 +18,24 @@ class UserRepository
         $this->model = $model;
     }
 
-    public function paginate($paginate = 20, $orderBy, $sort = 'ASC', $columns = null)
-    {
+    public function paginate($paginate = 20, $orderBy, $sort, $columns = null)
+    { 
         try {
             $query = $this->model->query();
-            $query->select('users.*');
-            $query->join('perfis', 'perfis.id', '=', 'users.perfil_id');
+            $usuarios = request()->only('name', 'email', 'perfil_id');
+
+            foreach ($usuarios as $nome => $valor) {
+                if($valor){
+                    $query->where($nome, 'ilike', '%'. $valor. '%');
+                }
+            }
+
             $query->orderBy($orderBy, $sort);
 
             return $query->paginate($paginate);
         } catch (Exception $e) {
-            return [];
+            return $e->getMessage();
         }
-    }
-
-    public function paginateWhere($paginate = 20, $orderBy, $sort, $columns = null)
-    { 
-        $query = $this->model->query();
-        $usuarios = request()->only('name', 'email', 'perfil_id');
-
-        foreach ($usuarios as $nome => $valor) {
-            if($valor){
-                $query->where($nome, 'ilike', '%'. $valor. '%');
-            }
-        }
-
-        $query->orderBy($orderBy, $sort);
-
-        return $query->paginate($paginate);
-
     }
 
     public function store($data)
