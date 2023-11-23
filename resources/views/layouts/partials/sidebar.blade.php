@@ -53,7 +53,7 @@
     @can('usuario')
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('admin.vagas.index')}}" 
+            <a class="nav-link collapsed" href="{{ route('usuarios.index')}}" 
                 aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="far fa-address-card"></i>
                 <span>Vagas Disponiveis</span>

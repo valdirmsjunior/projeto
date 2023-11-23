@@ -12,20 +12,10 @@
     <div class="col-lg-12">
         <x-table
             title="Vagas"
-            subtitle="Listagem de Vagas"
+            subtitle="Disponibilidade de Vagas"
             :headers="['Nome', 'Tipo de Contrato', 'Quantidade de Vagas','Status' ,'Ações']"
             :records="$vagas"
         >
-            <x-slot name="slotButton">
-                <div class="mb-3 row justify-content-end">
-                    <div class="col-2 d-grid">
-                        <a class="btn btn-info" href="#" role="button">
-                            <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Vagas
-                        </a>
-                    </div>
-                </div>
-            </x-slot>
-            
             <x-slot name="slot">
                 @forelse ($vagas as $vagaKey => $vaga)
                  
@@ -33,7 +23,7 @@
                     <td>{{ $vaga->nome }}</td>
                     <td>{{ $vaga->tipo_contrato_id ? $vaga->tipoContrato->nome : ""}}</td>
                     <td>{{ $vaga->quantidade_vagas }}</td>
-                    <td>{{ $vaga->id }}</td>
+                    <td>{{ $vaga->status }}</td>
                     <td>
                         <div class="dropdown dropup">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu-{{ $vagaKey }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
