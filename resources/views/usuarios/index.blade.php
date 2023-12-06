@@ -20,11 +20,11 @@
                 @forelse ($vagas as $vagaKey => $vaga)
                  
                 <tr class="text-center align-middle">
-                    <td>{{ $vaga->nome }}</td>
-                    <td>{{ $vaga->tipo_contrato_id ? $vaga->tipoContrato->nome : ""}}</td>
-                    <td>{{ $vaga->quantidade_vagas }}</td>
-                    <td>{{ $vaga->status }}</td>
-                    <td>
+                    <td class="text-center align-middle">{{ $vaga->nome }}</td>
+                    <td class="text-center align-middle">{{ $vaga->tipo_contrato_id ? $vaga->tipoContrato->nome : ""}}</td>
+                    <td class="text-center align-middle">{{ $vaga->quantidade_vagas }}</td>
+                    <td class="text-center align-middle"><div class="font-weight-bold rounded-pill text-wrap {{$vaga->status->backgroundColor()}}">{{ $vaga->status }} <p>{{$vaga->status->description()}}</p></div></td>
+                    <td class="text-center align-middle">
                         <div class="dropdown dropup">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu-{{ $vagaKey }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-cog"></i>
