@@ -23,34 +23,15 @@
                     <td class="text-center align-middle">{{ $vaga->nome }}</td>
                     <td class="text-center align-middle">{{ $vaga->tipo_contrato_id ? $vaga->tipoContrato->nome : ""}}</td>
                     <td class="text-center align-middle">{{ $vaga->quantidade_vagas }}</td>
-                    <td class="text-center align-middle"><div class="font-weight-bold rounded-pill text-wrap {{$vaga->status->backgroundColor()}}">{{ $vaga->status }} <p>{{$vaga->status->description()}}</p></div></td>
                     <td class="text-center align-middle">
-                        <div class="dropdown dropup">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu-{{ $vagaKey }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-cog"></i>
-                            </button>
-                            
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu-{{ $vagaKey }}" >
-                                <a
-                                    class="dropdown-item"
-                                    href="#"
-                                >
-                                    <i class="fas fa-pencil-alt"></i> Editar
-                                </a>
-
-                                <div class="dropdown-divider"></div>
-
-                                <a
-                                    class=" dropdown-item text-danger"
-                                    data-toggle="modal" data-target="#ModalDelete_{{$vaga->id}}" title="Deletar"
-                                >
-                                    <i class="fas fa-trash-alt"></i> Deletar
-                                </a>
-                                
-                            </div>
-                            {{-- @include('admin.vagas.partials.modal-delete') --}}
-                        </div>
-                        
+                        <button type="button" class="btn rounded-pill {{$vaga->status->backgroundColor()}}" disabled>
+                            <span>{{ $vaga->status }} </span>
+                        </button>
+                    </td>
+                    <td class="text-center align-middle">
+                        <button class="rounded-pill btn btn-info" type="button" >
+                            <span>Candidatar-se</span>
+                        </button>
                     </td>
                 </tr>
                 
