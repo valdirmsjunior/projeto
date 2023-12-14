@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 
 use App\Models\Vaga;
 
-
 class VagaRepository 
 {
     protected $model;
@@ -23,8 +22,15 @@ class VagaRepository
     {
         try {
             $query = $this->model->query();
-            $vagas = request()->only('nome', 'tipo_contrato_id');
+            $query->select('vagas.*','candidatos_vagas.vaga_id','candidatos_vagas.usuario_id','candidatos_vagas.ativo');
+            $query->leftjoin('candidatos_vagas', function( $join){
+                $join->on('candidatos_vagas.vaga_id', '=', 'vagas.id');
+                $join->on('candidatos_vagas.ativo',DB::raw("'true'"));
+                    
+            });
 
+            $vagas = request()->only('nome', 'tipo_contrato_id');
+            
             foreach ($vagas as $nome => $valor) {
                 if($valor){
                     $query->where($nome, 'ilike', '%'. $valor. '%');

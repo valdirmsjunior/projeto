@@ -69,7 +69,7 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(User $usuario)
-    {//dd($usuario);
+    {
         return view('admin.usuarios.edit', [
             'usuarios' => $usuario,
             'perfis' => $this->perfilRepository->selectOption()

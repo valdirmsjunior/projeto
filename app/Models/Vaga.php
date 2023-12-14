@@ -31,14 +31,7 @@ class Vaga extends Model
      *
      * @var bool
      */
-    public $incrementing = false;
-
-    /**
-     * The data type of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
+    public $incrementing = true;
 
     /**
      * Indicates if the model should be timestamped.

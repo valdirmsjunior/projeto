@@ -16,7 +16,7 @@
             :headers="['Nome', 'Tipo de Contrato', 'Quantidade de Vagas','Status' ,'Ações']"
             :records="$vagas"
         >
-            <x-slot name="slot">
+            <x-slot name="slot"> 
                 @forelse ($vagas as $vagaKey => $vaga)
                  
                 <tr class="text-center align-middle">
@@ -29,11 +29,35 @@
                         </button>
                     </td>
                     <td class="text-center align-middle">
-                        <button class="rounded-pill btn btn-info" type="button" >
-                            <span>Candidatar-se</span>
+                        
+                            @if (Auth::user()->id === $vaga->usuario_id)
+                            <button class="text-white shadow-lg border-warning rounded-pill btn btn-warning" type="button" data-toggle='modal' data-target="#candidato-modal-{{$vaga->id}}" disabled>
+                                <span>Concorrendo</span> 
+                            @else
+                            <button class="rounded-pill btn btn-info" type="button" data-toggle='modal' data-target="#candidato-modal-{{$vaga->id}}" >
+                                <span>Candidatar-se</span>
+                            @endif
+                            
                         </button>
                     </td>
                 </tr>
+                
+                <x-modal 
+                    title="Candidatar-se"
+                    target="candidato-modal-{{$vaga->id}}"
+                    action="{{ route('usuarios.store', $vaga) }}"
+                    message="Deseja se candidatar a essa vaga?"
+                    size="md"
+                >
+                
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Vaga: </span>
+                            {{ $vaga->nome }}
+                        </div>
+                    </div>
+                    
+                </x-modal>
                 
                 @empty
                 @endforelse

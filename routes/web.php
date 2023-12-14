@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'namespace' => 'App\Http\Con
     Route::prefix('usuario')->namespace('Usuario')->group(function () {
         //  HOME
         Route::get('/', 'HomeController@index')->name('usuarios.index')->middleware('can:usuario');
+        Route::post('/{vaga}', 'HomeController@store')->name('usuarios.store');
     });
 
     Route::post('/', [AuthenticatedSessionController::class, 'destroy'])->name('auth.logout');

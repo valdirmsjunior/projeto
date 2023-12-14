@@ -3,16 +3,23 @@
 namespace App\Http\Controllers\Usuario;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Vaga;
+use App\Repositories\HomeRepository;
 use Illuminate\Http\Request;
 
 use App\Repositories\VagaRepository;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-
-    public function __construct(VagaRepository $vagaRepository)
+    public function __construct(
+        VagaRepository $vagaRepository,
+        HomeRepository $homeRepository
+    )
     {
         $this->vagaRepository = $vagaRepository;
+        $this->homeRepository = $homeRepository;
     }
     /**
      * Display a listing of the resource.
@@ -37,9 +44,19 @@ class HomeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Vaga $vaga)
     {
-        //
+        $result = $this->homeRepository->store($vaga,$request->except(['_token']));
+
+        if ($result === true) {
+            flash('Concorrendo a vaga com sucesso')->success();
+
+            return redirect()->route('usuarios.index');
+        }
+
+        flash('Erro ao concorrer a vaga, tente novamente')->error();
+
+        return redirect()->route('usuarios.index');
     }
 
     /**

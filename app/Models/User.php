@@ -36,7 +36,7 @@ class User extends Authenticatable
      *
      * @var bool
      */
-    public $incrementing = false;
+    public $incrementing = true;
 
     /**
      * Indicates if the model should be timestamped.
@@ -89,5 +89,10 @@ class User extends Authenticatable
     public function isUser(int $codigoPerfil): bool
     {
         return $codigoPerfil === PerfilEnum::USUARIO->value ?  true :  false;
+    }
+
+    public function candidatoVaga()
+    {
+        return $this->hasMany(CandidatoVaga::class);
     }
 }

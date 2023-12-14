@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\CandidatoVaga;
 use App\Models\Perfil;
 use App\Models\TipoContrato;
 use App\Models\User;
@@ -34,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(TipoContratoRepository::class, function($app) {
             return new TipoContratoRepository(new TipoContrato());
+        });
+
+        $this->app->bind(HomeRepository::class, function($app) {
+            return new HomeRepository(new CandidatoVaga());
         });
     }
 
