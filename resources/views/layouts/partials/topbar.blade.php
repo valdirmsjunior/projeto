@@ -52,9 +52,8 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 text-gray-600 d-none d-lg-inline small">Douglas McGee</span>
-                <img class="img-profile rounded-circle"
-                    src="img/undraw_profile.svg">
+                <span class="mr-3 text-gray-600 d-none d-lg-inline font-weight-bold">{{Auth::user()->name}}</span>
+                <i class="fas fa-user-alt" style="color: #646362;"></i>
             </a>
             <!-- Dropdown - User Information -->
             <div class="shadow dropdown-menu dropdown-menu-right animated--grow-in"

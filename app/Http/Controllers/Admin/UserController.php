@@ -21,15 +21,12 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        if (count($request->all()) > 0) {
-            $usuarios = $this->userRepository->paginateWhere(10, 'name', 'ASC', $request->except(['_token', 'page']));
-        } else {
-            $usuarios = $this->userRepository->paginate(10, 'name');
-        }
+        $usuarios = $this->userRepository->paginate(20, 'name', 'ASC');
 
         return view('admin.usuarios.index', [
-            'usuarios' => $usuarios
-        ]);
+            'usuarios' => $usuarios,
+            'perfis' => $this->perfilRepository->selectOption()
+        ])->with($request->flash());
     }
 
     /**
@@ -72,7 +69,7 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(User $usuario)
-    {//dd($usuario);
+    {
         return view('admin.usuarios.edit', [
             'usuarios' => $usuario,
             'perfis' => $this->perfilRepository->selectOption()

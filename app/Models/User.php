@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\Perfil as PerfilEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -33,7 +36,7 @@ class User extends Authenticatable
      *
      * @var bool
      */
-    public $incrementing = false;
+    public $incrementing = true;
 
     /**
      * Indicates if the model should be timestamped.
@@ -73,8 +76,23 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function perfil()
+    public function perfil(): BelongsTo
     {
         return $this->belongsTo(Perfil::class);
+    }
+
+    public function isAdmin(int $codigoPerfil): bool
+    {
+        return $codigoPerfil === PerfilEnum::ADMIN->value ?  true :  false;
+    }
+
+    public function isUser(int $codigoPerfil): bool
+    {
+        return $codigoPerfil === PerfilEnum::USUARIO->value ?  true :  false;
+    }
+
+    public function candidatoVaga()
+    {
+        return $this->hasMany(CandidatoVaga::class);
     }
 }

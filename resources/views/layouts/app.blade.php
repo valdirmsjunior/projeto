@@ -75,8 +75,11 @@
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <form action="{{ route('auth.logout') }}" method="POST">
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger" id="btn-ok">Logout</a>
+                    </form>
                 </div>
             </div>
         </div>
@@ -85,6 +88,7 @@
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('libs/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('libs/js/utils.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('libs/js/sb-admin-2.min.js')}}"></script>

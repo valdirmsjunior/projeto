@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\CandidatoVaga;
 use App\Models\Perfil;
 use App\Models\TipoContrato;
 use App\Models\User;
@@ -10,6 +11,7 @@ use App\Repositories\PerfilRepository;
 use App\Repositories\TipoContratoRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\VagaRepository;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -34,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TipoContratoRepository::class, function($app) {
             return new TipoContratoRepository(new TipoContrato());
         });
+
+        $this->app->bind(HomeRepository::class, function($app) {
+            return new HomeRepository(new CandidatoVaga());
+        });
     }
 
     /**
@@ -41,6 +47,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useBootstrap();
     }
 }

@@ -53,6 +53,7 @@
             </div>
             <div class="col-6 d-flex justify-content-end">
                 @if($records && method_exists($records, 'links'))
+                    {{-- {{ dd($records);}} --}}
                     {!! $records->appends(request()->query())->links()!!}
                 @endif
             </div>

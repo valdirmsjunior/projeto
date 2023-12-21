@@ -8,6 +8,9 @@
 
 @section('content')
 
+@include('admin.vagas.partials.form-filtro')
+
+<br><br>
 <div class="row">
     <div class="col-lg-12">
         <x-table
@@ -33,7 +36,7 @@
                     <td>{{ $vaga->nome }}</td>
                     <td>{{ $vaga->tipo_contrato_id ? $vaga->tipoContrato->nome : ""}}</td>
                     <td>{{ $vaga->quantidade_vagas }}</td>
-                    <td>{{ $vaga->id }}</td>
+                    <td><span class="font-weight-bold rounded-pill p-2 text-wrap {{$vaga->status->backgroundColor()}}">{{ $vaga->status }}</span>  </td>
                     <td>
                         <div class="dropdown dropup">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu-{{ $vagaKey }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

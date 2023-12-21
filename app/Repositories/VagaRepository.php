@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 
 use App\Models\Vaga;
 
-
 class VagaRepository 
 {
     protected $model;
@@ -19,37 +18,29 @@ class VagaRepository
         $this->model = $model;
     }
 
-    public function paginate($paginate = 10, $orderBy, $sort = 'ASC')
+    public function paginate($paginate = 20, $orderBy, $sort = 'ASC', $columns = null)
     {
         try {
             $query = $this->model->query();
-            $query->select('vagas.*');
-            $query->join('tipos_contrato', 'tipos_contrato.id', '=', 'vagas.tipo_contrato_id');
-            $query->orderBy($orderBy, $sort);
+            $query->select('vagas.*','candidatos_vagas.vaga_id','candidatos_vagas.usuario_id','candidatos_vagas.ativo');
+            $query->leftjoin('candidatos_vagas', function( $join){
+                $join->on('candidatos_vagas.vaga_id', '=', 'vagas.id');
+                $join->on('candidatos_vagas.ativo',DB::raw("'true'"));
+                    
+            });
+
+            $vagas = request()->only('nome', 'tipo_contrato_id');
             
-            return $query->paginate($paginate);
-        } catch (Exception $e) {
-            return [];
-        }
-    }
-
-    public function paginateWhere($paginate = 10, $orderBy, $sort = 'ASC', $columns = null)
-    {
-        try {
-            $query = $this->model->query();
-            $query->select('vagas.*');
-            $query->join('tipos_contrato', 'tipos_contrato.id', '=', 'vagas.tipo_contrato_id');
-            $query->orderBy($orderBy, $sort);
-
-            if (count($columns) > 0) {
-                if (isset($columns['tipo_contrato_id'])) {
-                    $query->where('tipo_contrato_id', $columns['tipo_contrato_id']);
+            foreach ($vagas as $nome => $valor) {
+                if($valor){
+                    $query->where($nome, 'ilike', '%'. $valor. '%');
                 }
             }
-    
-            return $query->orderBy($orderBy, $sort)->paginate($paginate);
+            
+            $query->orderBy($orderBy, $sort);
+            return $query->paginate($paginate);
         } catch (Exception $e) {
-            return [];
+            return $e->getMessage();
         }
     }
 

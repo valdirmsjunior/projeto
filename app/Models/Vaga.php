@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,14 +31,7 @@ class Vaga extends Model
      *
      * @var bool
      */
-    public $incrementing = false;
-
-    /**
-     * The data type of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
+    public $incrementing = true;
 
     /**
      * Indicates if the model should be timestamped.
@@ -56,6 +50,10 @@ class Vaga extends Model
         'tipo_contrato_id',
         'quantidade_vagas',
         'status'
+    ];
+
+    protected $casts = [
+        'status'=> StatusEnum::class,
     ];
 
     public function tipoContrato()
